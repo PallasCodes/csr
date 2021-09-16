@@ -1,0 +1,62 @@
+<%- include('header.ejs') %>
+
+<main class="container py-5">
+	<h2 class="text-center">Tasks</h2>
+	<div class="row justify-content-center">
+		<div class="col-4">
+			<% if(task) { %>
+			<!-- UPDATE -->
+				<form action="/tasks/update/<%= task._id %>" method="POST" class="py-4" autocomplete="off">
+				 <div class="mb-3">
+				    <label for="title" class="form-label" >Title</label>
+				    <input type="text" class="form-control" name="title"
+				    value="<%= task.title %>" >
+				  </div>
+				  <div class="mb-3">
+				    <label for="description" class="form-label">Description</label>
+				    <textarea class="form-control" name="description"><%= task.description %></textarea>
+				  </div>
+				  <button type="submit" class="btn btn-success w-100">Update</button>
+				</form>
+			<% } else { %>
+				<!-- CREATE -->
+				<form action="/tasks/create" method="POST" class="py-4" autocomplete="off">
+					 <div class="mb-3">
+					    <label for="title" class="form-label">Title</label>
+					    <input type="text" class="form-control" name="title" >
+					  </div>
+					  <div class="mb-3">
+					    <label for="description" class="form-label">Description</label>
+					    <textarea class="form-control" name="description"></textarea>
+					  </div>
+					  <button type="submit" class="btn btn-primary w-100">Create</button>
+				</form>
+			<% } %>
+		</div>
+	</div>
+
+	<div class="row justify-content-center my-4">
+		<div class="col-4">
+			<% tasks.forEach(task => { %>
+				<div class="card shadow-sm my-2">
+					<div class="card-body">
+						<h5 class="card-title">
+							<%= task.title %>
+						</h5>
+						<div class="card-text">
+							<%= task.description %>
+							<div class="d-flex mt-3">
+								<a href="/tasks/update/<%= task._id %>" class="btn btn-sm btn-success text-white me-1">Update</a>
+								<form action="/tasks/delete/<%= task._id %>" method="POST" >
+										<button class="btn btn-sm btn-danger" type="submit">Delete</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% })%>
+		</div>
+	</div>
+</main>
+
+<%- include('footer.ejs') %>
