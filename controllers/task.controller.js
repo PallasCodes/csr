@@ -3,7 +3,7 @@ const Task = require('../models/task.model')
 
 exports.index = async (req, res) => {
 	const tasks = await Task.find()
-	res.render('index', { tasks, task: null })
+	res.json(tasks)
 }
 
 
@@ -13,8 +13,8 @@ exports.create = async (req, res) => {
 		description: req.body.description
 	})
 
-	await task.save()
-	res.redirect('/tasks/all')
+	const newTask = await task.save()
+	res.json(newTask)
 }
 
 
@@ -22,17 +22,7 @@ exports.delete = async (req, res) => {
 	const taskId = req.params.taskId
 
 	await Task.deleteOne({ _id: taskId })
-	res.redirect('/tasks/all')
-}
-
-
-exports.getUpdate = async (req, res) => {
-	const taskId = req.params.taskId
-
-	const tasks = await Task.find()
-	const task = await Task.findById(taskId)
-	console.log(task)
-	res.render('index', { tasks, task })
+	res.json({message: "task deleted"})
 }
 
 
@@ -43,6 +33,7 @@ exports.update = async (req, res) => {
 		title: req.body.title,
 		description: req.body.description
 	}
-	await Task.findOneAndUpdate({_id: taskId }, task)
-	res.redirect('/tasks/all')	
+	const updatedTask = await Task.findOneAndUpdate({_id: taskId }, task)
+	task._id = taskId
+	res.json(task)	
 }

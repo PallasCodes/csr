@@ -1,6 +1,6 @@
 {
 	"env": {
-		"DB_URI": "mongodb://localhost:27017/ssr",
+		"DB_URI": "mongodb://localhost:27017/csr",
 		"PORT": 3000
 	}
 }

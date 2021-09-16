@@ -4,20 +4,17 @@ const router = express.Router()
 const taskController = require('../controllers/task.controller')
 
 
-// GET 				/tasks/all
-router.get('/all', taskController.index)
+// GET 				/tasks
+router.get('', taskController.index)
 
-// POST 			/tasks/create
-router.post('/create', taskController.create)
+// POST 			/tasks
+router.post('', taskController.create)
 
-// POST 			/tasks/delete/:taskId
-router.post('/delete/:taskId', taskController.delete)
+// DELETE 		/tasks/:taskId
+router.delete('/:taskId', taskController.delete)
 
-// GET 			/tasks/update/:taskId
-router.get('/update/:taskId', taskController.getUpdate)
-
-// POST 		/tasks/update/:taskId
-router.post('/update/:taskId', taskController.update)
+// PUT 				/tasks/:taskId
+router.put('/:taskId', taskController.update)
 
 
 module.exports = router
